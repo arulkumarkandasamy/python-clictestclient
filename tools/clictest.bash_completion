@@ -1,0 +1,25 @@
+_clictest_opts="" # lazy init
+_clictest_flags="" # lazy init
+_clictest_opts_exp="" # lazy init
+_clictest()
+{
+    local cur prev nbc cflags
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    if [ "x$_clictest_opts" == "x" ] ; then
+        nbc="`clictest bash-completion | sed -e "s/  *-h  */ /" -e "s/  *-i  */ /"`"
+        _clictest_opts="`echo "$nbc" | sed -e "s/--[a-z0-9_-]*//g" -e "s/  */ /g"`"
+        _clictest_flags="`echo " $nbc" | sed -e "s/ [^-][^-][a-z0-9_-]*//g" -e "s/  */ /g"`"
+        _clictest_opts_exp="`echo "$_clictest_opts" | sed 's/^ *//' | tr ' ' '|'`"
+    fi
+
+    if [[ " ${COMP_WORDS[@]} " =~ " "($_clictest_opts_exp)" " && "$prev" != "help" ]] ; then
+        COMPREPLY=($(compgen -W "${_clictest_flags}" -- ${cur}))
+    else
+        COMPREPLY=($(compgen -W "${_clictest_opts}" -- ${cur}))
+    fi
+    return 0
+}
+complete -F _clictest clictest

@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = clictestclient
+omit = clictestclient/openstack/*
+
+[report]
+ignore_errors = True

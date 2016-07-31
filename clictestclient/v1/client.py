@@ -34,7 +34,7 @@ class Client(object):
     def __init__(self, endpoint=None, **kwargs):
         """Initialize a new client for the clictest v1 API."""
         endpoint, self.version = utils.endpoint_version_from_url(endpoint, 1.0)
-        self.objectspy = objectspy.ObjectspyManager(self.http_client)
         self.http_client = http.get_http_client(endpoint=endpoint, **kwargs)
+        self.objectspy = objectspy.ObjectspyManager(self.http_client)        
         self.versions = versions.VersionManager(self.http_client)
 

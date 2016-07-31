@@ -187,11 +187,7 @@ class BaseManager(HookableMixin):
 
 @six.add_metaclass(abc.ABCMeta)
 class ManagerWithFind(BaseManager):
-    """Manager with additional `find()`/`findall()` methods."""
-
-    @abc.abstractmethod
-    def list(self):
-        pass
+    """Manager with additional `find()`/`findall()` methods."""    
 
     def find(self, **kwargs):
         """Find a single item with attributes matching ``**kwargs``.
